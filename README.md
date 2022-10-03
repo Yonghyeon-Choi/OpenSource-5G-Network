@@ -61,7 +61,7 @@
 * 5G RAN 재실행\
   docker restart 5G_RAN
 
-* 5G UE 
+* 5G UE에서 5G 네트워크 사용
   * 컨테이너 웹 접속\
   웹브라우저에서 https://{현재인스턴스의공인IP}\
   ID : root, Password : 1234\
