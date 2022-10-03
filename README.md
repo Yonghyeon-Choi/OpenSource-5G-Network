@@ -49,7 +49,7 @@
   ./run.sh\
   ctrl + P,Q
   
-* 5G Core 네트워크에 구독자 등록\
+* Open5GS Web UI, 5G Core 네트워크에 구독자 등록\
   웹브라우저에서 http://{현재인스턴스의공인IP}\
   ID : admin, Password : 1423\
   ![image](https://user-images.githubusercontent.com/32658266/193664824-623758fb-1a04-4199-9a53-f7ef3e07f870.png)\
