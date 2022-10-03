@@ -1,0 +1,36 @@
+# ubuntu 20.04 LTS 기반
+FROM ubuntu:20.04
+ENV TZ=Asia/Seoul
+RUN apt-get update && apt-get upgrade -y && apt-get install -y iptables curl net-tools init systemd
+
+# 여러 의존성을 해결해주는 software-properties-common 설치를 위한 작업
+RUN ln -fs /usr/share/zoneinfo/Asia /etc/localtime && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    apt-get install -y software-properties-common
+
+# Open5GS 설치
+RUN add-apt-repository ppa:open5gs/latest -y && \
+    mkdir -p /data/db && apt-get update && apt-get install -y open5gs
+# Open5GS Web UI설치
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs && \
+    pkill -9 -ef mongod && \
+    mongod --fork --logpath /var/log/mongodb.log --logappend && \
+    curl -fsSL https://open5gs.org/open5gs/assets/webui/install | bash -
+
+# Open5GS 설정 파일 수정
+# 원문 https://open5gs.org/open5gs/docs/guide/01-quickstart/ 의 4. Configure Open5GS와
+# 원문 https://github.com/open5gs/open5gs/blob/main/webui/server/index.js 참조
+RUN sed -i "171 s/127.0.0.7/172.20.0.2/g" /etc/open5gs/upf.yaml
+RUN sed -i "232 s/127.0.0.5/172.20.0.2/g" /etc/open5gs/amf.yaml
+RUN sed -i "235 s/999/901/g" /etc/open5gs/amf.yaml
+RUN sed -i "242 s/999/901/g" /etc/open5gs/amf.yaml
+RUN sed -i "247 s/999/901/g" /etc/open5gs/amf.yaml
+RUN sed -i "3 s/localhost/0.0.0.0/g" /usr/lib/node_modules/open5gs/server/index.js
+ADD account.js account.js
+RUN chmod +x account.js
+
+# 도커 실행 시 사용해야 하는 스크립트
+ADD run.sh run.sh
+RUN chmod +x run.sh
+CMD ["/sbin/init"]

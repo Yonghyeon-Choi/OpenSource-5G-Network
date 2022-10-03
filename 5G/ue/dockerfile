@@ -1,0 +1,30 @@
+# Ubuntu GUI Docker : dorowu/ubuntu-desktop-lxde-vnc:focal 기반
+FROM dorowu/ubuntu-desktop-lxde-vnc:focal
+ENV TZ=Asia/Seoul
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B && \
+    apt-get update && apt-get upgrade -y && \
+    apt-get install -y net-tools
+
+# 여러 의존성 설치를 위한 작업
+RUN ln -fs /usr/share/zoneinfo/Asia /etc/localtime && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    apt-get install -y software-properties-common openssl libssl-dev git \
+    make gcc g++ libsctp-dev lksctp-tools iproute2 wget build-essential
+
+# UERANSIM 설치를 위한 C, C++ 빌드 툴 CMake 설치
+RUN \
+    wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0.tar.gz && \
+    tar xzvf cmake-3.20.0.tar.gz && cd cmake-3.20.0 && \
+    ./bootstrap && make && make install
+
+# UERANSIM 설치
+RUN git clone https://github.com/aligungr/UERANSIM && \
+    cd UERANSIM && make
+
+# UERANSIM UE 설정 파일 수정
+# 원본 https://github.com/aligungr/UERANSIM/blob/master/config/open5gs-ue.yaml
+RUN chmod +x /root/UERANSIM/build/nr-binder
+RUN sed -i \
+    '2 a sed -i \"2 s/999700000000001/901700000000001/g\" /root/UERANSIM/config/open5gs-ue.yaml\n\
+sed -i \"4 s/999/901/g\" /root/UERANSIM/config/open5gs-ue.yaml\n\
+sed -i \"23 s/127.0.0.1/172.20.0.3/g\" /root/UERANSIM/config/open5gs-ue.yaml\n\n' /startup.sh

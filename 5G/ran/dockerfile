@@ -1,0 +1,37 @@
+# ubuntu 20.04 LTS 기반
+FROM ubuntu:20.04
+ENV TZ=Asia/Seoul
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y net-tools init systemd
+
+# 여러 의존성 설치를 위한 작업
+RUN ln -fs /usr/share/zoneinfo/Asia /etc/localtime && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    apt-get install -y software-properties-common openssl libssl-dev git \
+    make gcc g++ libsctp-dev lksctp-tools iproute2 wget build-essential
+
+# UERANSIM 설치를 위한 C, C++ 빌드 툴 CMake 설치
+RUN apt-get install wget && cd ~ && \
+    wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0.tar.gz && \
+    tar xzvf cmake-3.20.0.tar.gz && cd cmake-3.20.0 && \
+    ./bootstrap && make && make install
+
+# UERANSIM 설치
+RUN cd ~ && git clone https://github.com/aligungr/UERANSIM && \
+    cd ~/UERANSIM && make
+
+# 도커 실행 시 사용해야 하는 스크립트
+# UERANSIM RAN 설정 파일 수정
+# 원본 https://github.com/aligungr/UERANSIM/blob/master/config/open5gs-gnb.yaml
+RUN echo '#!/bin/bash' > run.sh
+RUN echo\
+    "\n\n\
+sed -i \"1 s/999/901/g\" /root/UERANSIM/config/open5gs-gnb.yaml\n\
+sed -i \"8 s/127.0.0.1/0.0.0.0/g\" /root/UERANSIM/config/open5gs-gnb.yaml\n\
+sed -i \"14 s/127.0.0.5/172.20.0.2/g\" /root/UERANSIM/config/open5gs-gnb.yaml\n\
+sed -i \"9 s/127.0.0.1/172.20.0.3/g\" /root/UERANSIM/config/open5gs-gnb.yaml\n\
+sed -i \"10 s/127.0.0.1/172.20.0.3/g\" /root/UERANSIM/config/open5gs-gnb.yaml\n" >> run.sh
+RUN echo "\n~/UERANSIM/build/./nr-gnb -c ~/UERANSIM/config/open5gs-gnb.yaml" >> run.sh
+RUN chmod +x run.sh
+ENV SHELL=/bin/bash
+ENTRYPOINT ["/run.sh"]

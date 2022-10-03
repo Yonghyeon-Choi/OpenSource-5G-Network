@@ -1,0 +1,67 @@
+version: "3.0"
+
+services:
+  core:
+    image: nr-5g-registry.kr.ncr.ntruss.com/coreimage:latest
+    restart: unless-stopped
+    container_name: 5G_CN
+    ports:
+      - "80:3000"
+    expose:
+      - "80"
+    networks:
+      default:
+        ipv4_address: 172.20.0.2
+    volumes:
+      - ~/5G/core/data:/data/db
+    stdin_open: true
+    tty: true
+    privileged: true
+    entrypoint: /sbin/init
+  ran:
+    image: nr-5g-registry.kr.ncr.ntruss.com/ranimage:latest
+    restart: unless-stopped
+    container_name: 5G_RAN
+    networks:
+      default:
+        ipv4_address: 172.20.0.3
+    stdin_open: true
+    tty: true
+    depends_on:
+        - core
+  ue:
+    image: nr-5g-registry.kr.ncr.ntruss.com/ueimage:latest
+    restart: unless-stopped
+    container_name: 5G_UE
+    ports:
+      - "443:443"
+    expose:
+      - "443"
+    environment:
+      - SSL_PORT=443
+      - RESOLUTION=2560x1440
+      - HTTP_PASSWORD=1234
+    volumes:
+      - ~/5G/ue/ssl:/etc/nginx/ssl
+      - /dev/shm:/dev/shm
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    networks:
+      default:
+        ipv4_address: 172.20.0.4
+    stdin_open: true
+    tty: true
+    depends_on:
+        - ran
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+# docker-compose -f docker-compose-5g-default.yml up -d && docker restart 5G_UE
+# docker-compose -f docker-compose-5g-default.yml down
