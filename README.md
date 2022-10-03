@@ -86,13 +86,13 @@
 * https://github.com/aligungr/UERANSIM/wiki
 
 ## 참고 블로그
-* [Open5GS + UERANSIM 으로 5G 네트워크 구축하기](https://frontjang.tistory.com/entry/Open5GC-UERANSIM-%EC%9C%BC%EB%A1%9C-5G-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-1-%EA%B5%AC%EC%84%B1-%EB%B0%8F-%EC%84%A4%EC%B9%98?category=670780)\
+* [Open5GS + UERANSIM 으로 5G 네트워크 구축하기](https://frontjang.tistory.com/entry/Open5GC-UERANSIM-%EC%9C%BC%EB%A1%9C-5G-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-1-%EA%B5%AC%EC%84%B1-%EB%B0%8F-%EC%84%A4%EC%B9%98?category=670780)
 * [Deploying 5G Core Network with Open5GS and UERANSIM](https://medium.com/rahasak/5g-core-network-setup-with-open5gs-and-ueransim-cd0e77025fd7)
 
 ## 참고 문서
-* Kim, Mun-Hong, et al. "5G 이동통신기술 발전방향." Information and Communications Magazine 32.9_spc (2015): 46-54.\
-* 송종태, et al. "5G 네트워크 구조 분석." Telecommunications Review 25.6 (2015): 884-898.\
-* Jo, Chang-Gil. "Special Report-5G 네트워크 기술 동향." TTA Journal (2016): 58-63.\
+* Kim, Mun-Hong, et al. "5G 이동통신기술 발전방향." Information and Communications Magazine 32.9_spc (2015): 46-54.
+* 송종태, et al. "5G 네트워크 구조 분석." Telecommunications Review 25.6 (2015): 884-898.
+* Jo, Chang-Gil. "Special Report-5G 네트워크 기술 동향." TTA Journal (2016): 58-63.
 
 
 ## 참고 3GPP 문서
