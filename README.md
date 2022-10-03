@@ -48,6 +48,15 @@
   docker exec -it 5G_CN /bin/bash\
   ./run.sh\
   ctrl + P,Q
+  
+* 5G Core 네트워크에 구독자 등록\
+  웹브라우저에서 http://{현재인스턴스의공인IP}\
+  ID : admin, Password : 1423\
+  ![image](https://user-images.githubusercontent.com/32658266/193664824-623758fb-1a04-4199-9a53-f7ef3e07f870.png)\
+  단말기 식별번호(IMSI)로 901700000000001를 등록\
+  Open5GS Web UI에 접속하여 구독자를 등록해야 UERANSIM의 UE에서 네트워크 사용이 가능함\
+  스마트폰 개통 과정이라 이해하면 쉬움
+
 
 * 5G RAN 재실행\
   docker restart 5G_RAN
@@ -55,7 +64,7 @@
 * 5G UE 
   * 컨테이너 웹 접속\
   웹브라우저에서 https://{현재인스턴스의공인IP}\
-  ID : root, PASSWORD : 1234\
+  ID : root, Password : 1234\
   ![image](https://user-images.githubusercontent.com/32658266/193657612-9e0ce160-23d3-444d-9d69-a3bdb4875604.png)\
   ![image](https://user-images.githubusercontent.com/32658266/193657719-e002a27e-62de-43df-82ac-a3ca38117310.png)\
   * 터미널 실행 : 시작메뉴 > System Tools > LXTerminal\
