@@ -2,6 +2,9 @@ version: "3.0"
 
 services:
   core:
+    # 5G/core/dockerfile로 빌드한 이미지
+    # 로컬에서 작업시 5G/core/경로 상에서 "docker build -t coreimage:lateset -f dockerfile ."로 
+    # 이미지 빌드 후 하단 이미지를 "image: coreimage:latest"로 변경 가능
     image: nr-5g-registry.kr.ncr.ntruss.com/coreimage:latest
     restart: unless-stopped
     container_name: 5G_CN
@@ -19,6 +22,9 @@ services:
     privileged: true
     entrypoint: /sbin/init
   ran:
+    # 5G/ran/dockerfile로 빌드한 이미지
+    # 로컬에서 작업시 5G/ran/경로 상에서 "docker build -t ranimage:lateset -f dockerfile ."로
+    # 이미지 빌드 후 하단 이미지를 "image: ranimage:latest"로 변경 가능
     image: nr-5g-registry.kr.ncr.ntruss.com/ranimage:latest
     restart: unless-stopped
     container_name: 5G_RAN
@@ -30,6 +36,9 @@ services:
     depends_on:
         - core
   ue:
+    # 5G/ue/dockerfile로 빌드한 이미지
+    # 로컬에서 작업시 5G/ue/경로 상에서 "docker build -t ueimage:lateset -f dockerfile ."로
+    # 이미지 빌드 후 하단 이미지를 image: ueimage:latest로 변경 가능
     image: nr-5g-registry.kr.ncr.ntruss.com/ueimage:latest
     restart: unless-stopped
     container_name: 5G_UE
@@ -63,5 +72,26 @@ networks:
       driver: default
       config:
         - subnet: 172.20.0.0/16
+
+# docekr-compose 실행
 # docker-compose -f docker-compose-5g-default.yml up -d && docker restart 5G_UE
+
+# 1. 5G Core 네트워크 실행
+# docker exec -it 5G_CN /bin/bash
+# ./run.sh
+# ctrl + P,Q
+
+# 2. 5G RAN 실행
+# docker restart 5G_RAN
+
+# 3. 5G UE 컨테이너 웹 접속
+# 웹브라우저에서 https://{현재인스턴스의공인IP}
+# ID : root, PASSWD : 1234
+# 터미널 실행                            : 시작메뉴 > System Tools > LXTerminal
+# UE 프로세스 실행                       : ./UERANSIM/build/nr-ue -c UERANSIM/config/open5gs-ue.yaml
+# 5G 네트워크를 경유하는 웹브라우저 실행 : ./UERANSIM/build/nr-binder 10.45.0.2 firefox
+# UE 프로세스 재실행 및 웹브라우저 이외의 앱을 실행시 10.45.0.2와 firefox 옵션은 바뀔 수 있음
+
+
+# docker-compose 종료
 # docker-compose -f docker-compose-5g-default.yml down
