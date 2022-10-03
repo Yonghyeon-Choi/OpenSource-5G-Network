@@ -16,7 +16,7 @@ services:
       default:
         ipv4_address: 172.20.0.2
     volumes:
-      - ~/5G/core/data:/data/db
+      - ~/OpenSource-5G-Network/5G/core/data:/data/db
     stdin_open: true
     tty: true
     privileged: true
@@ -51,7 +51,7 @@ services:
       - RESOLUTION=2560x1440
       - HTTP_PASSWORD=1234
     volumes:
-      - ~/5G/ue/ssl:/etc/nginx/ssl
+      - ~/OpenSource-5G-Network/5G/ue/ssl:/etc/nginx/ssl
       - /dev/shm:/dev/shm
     cap_add:
       - NET_ADMIN
