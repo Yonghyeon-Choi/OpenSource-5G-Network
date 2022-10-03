@@ -36,11 +36,11 @@
 
 ## 실행 방법
 
-* git clone\
+* 소스 불러오기\
   cd ~/\
   git clone https://github.com/Yonghyeon-Choi/OpenSource-5G-Network
 
-* docekr-compose 실행\
+* docker-compose 실행\
   cd OpenSource-5G-Network\
   docker-compose -f docker-compose-5g-default.yml up -d && docker restart 5G_UE
 
@@ -50,7 +50,7 @@
   ctrl + P,Q
   
 * Open5GS Web UI, 5G Core 네트워크에 구독자 등록\
-  웹브라우저에서 http://{현재인스턴스의공인IP}\
+  웹브라우저에서 http://{현재인스턴스의공인IP} 에 접속\
   ID : admin, Password : 1423\
   ![image](https://user-images.githubusercontent.com/32658266/193664824-623758fb-1a04-4199-9a53-f7ef3e07f870.png)\
   단말기 식별번호(IMSI)로 901700000000001를 등록\
@@ -63,7 +63,7 @@
 
 * 5G UE에서 5G 네트워크 사용
   * 컨테이너 웹 접속\
-  웹브라우저에서 https://{현재인스턴스의공인IP}\
+  웹브라우저에서 https://{현재인스턴스의공인IP} 에속접속\
   ID : root, Password : 1234\
   ![image](https://user-images.githubusercontent.com/32658266/193657612-9e0ce160-23d3-444d-9d69-a3bdb4875604.png)\
   ![image](https://user-images.githubusercontent.com/32658266/193657719-e002a27e-62de-43df-82ac-a3ca38117310.png)\
