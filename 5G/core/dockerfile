@@ -22,10 +22,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && \
 # 원문 https://open5gs.org/open5gs/docs/guide/01-quickstart/ 의 4. Configure Open5GS와
 # 원문 https://github.com/open5gs/open5gs/blob/main/webui/server/index.js 참조
 RUN sed -i "171 s/127.0.0.7/172.20.0.2/g" /etc/open5gs/upf.yaml
-RUN sed -i "232 s/127.0.0.5/172.20.0.2/g" /etc/open5gs/amf.yaml
-RUN sed -i "235 s/999/901/g" /etc/open5gs/amf.yaml
-RUN sed -i "242 s/999/901/g" /etc/open5gs/amf.yaml
-RUN sed -i "247 s/999/901/g" /etc/open5gs/amf.yaml
+RUN sed -i "272 s/127.0.0.5/172.20.0.2/g" /etc/open5gs/amf.yaml
+RUN sed -i "278 s/999/901/g" /etc/open5gs/amf.yaml
+RUN sed -i "285 s/999/901/g" /etc/open5gs/amf.yaml
+RUN sed -i "290 s/999/901/g" /etc/open5gs/amf.yaml
 RUN sed -i "3 s/localhost/0.0.0.0/g" /usr/lib/node_modules/open5gs/server/index.js
 ADD account.js account.js
 RUN chmod +x account.js
