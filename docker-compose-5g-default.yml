@@ -5,7 +5,7 @@ services:
     # 5G/core/dockerfile로 빌드한 이미지
     # 로컬에서 작업시 5G/core/경로 상에서 "docker build -t coreimage:lateset -f dockerfile ."로 
     # 이미지 빌드 후 하단 이미지를 "image: coreimage:latest"로 변경 가능
-    image: nr-5g-registry.kr.ncr.ntruss.com/coreimage:latest
+    image: nr-registry.ncr.gov-ntruss.com/coreimage:latest
     restart: unless-stopped
     container_name: 5G_CN
     ports:
@@ -25,7 +25,7 @@ services:
     # 5G/ran/dockerfile로 빌드한 이미지
     # 로컬에서 작업시 5G/ran/경로 상에서 "docker build -t ranimage:lateset -f dockerfile ."로
     # 이미지 빌드 후 하단 이미지를 "image: ranimage:latest"로 변경 가능
-    image: nr-5g-registry.kr.ncr.ntruss.com/ranimage:latest
+    image: nr-registry.ncr.gov-ntruss.com/ranimage:latest
     restart: unless-stopped
     container_name: 5G_RAN
     networks:
@@ -39,7 +39,7 @@ services:
     # 5G/ue/dockerfile로 빌드한 이미지
     # 로컬에서 작업시 5G/ue/경로 상에서 "docker build -t ueimage:lateset -f dockerfile ."로
     # 이미지 빌드 후 하단 이미지를 image: ueimage:latest로 변경 가능
-    image: nr-5g-registry.kr.ncr.ntruss.com/ueimage:latest
+    image: nr-registry.ncr.gov-ntruss.com/ueimage:latest
     restart: unless-stopped
     container_name: 5G_UE
     ports:
